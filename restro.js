@@ -1,4 +1,4 @@
-let restro = [
+export let restro = [
   {
     info: {
       id: "289371",

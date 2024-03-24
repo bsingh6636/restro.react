@@ -32,7 +32,19 @@ body {
 .appbody{
     display: flex;
     flex-wrap: wrap;
+    color: black;
    
+}
+
+.filterbutton{
+    margin: 10px;
+    /* border: 1px solid black; */
+   
+   
+}
+
+.filterbutton:hover{
+    cursor: pointer;
 }
 .restro-card{
     width: 200px;
@@ -44,6 +56,7 @@ body {
 }
 .restro-card:hover{
     border: 3px solid red;
+    cursor: pointer;
 }
 .restroimage{
     width: 100%;
