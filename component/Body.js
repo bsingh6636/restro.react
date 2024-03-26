@@ -4,6 +4,7 @@ import { Shimmer } from "./Shimmer";
 export const Body = () => {
   const [restrolist, setrestrolist] = useState([]);
   const [searchvalue, setsearchvalue] = useState("");
+  let [reslists, setreslists] = useState([]);
   console.log(searchvalue);
   const filterestro = () => {
     let filteredlist = restrolist.filter((resti) => resti.info.avgRating > 4);
@@ -15,16 +16,24 @@ export const Body = () => {
 
   const fetchdata = async () => {
     const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=13.1017167&lng=77.63482660000001"
+      "https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=13.1017167&lng=77.63482660000001"
     );
     const jsone = await data.json();
+
     setrestrolist(
       jsone.data.cards[1]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants ||
         jsone.data.cards[2].card.card.gridElements.infoWithStyle.restaurants
     );
-  };
+    setreslists( jsone.data.cards[1]?.card?.card?.gridElements?.infoWithStyle
+      ?.restaurants ||
+      jsone.data.cards[2].card.card.gridElements.infoWithStyle.restaurants)
+  
   console.log(restrolist)
+    
+  
+  };
+
   return restrolist.length === 0 ? (
     <Shimmer />
   ) : (
@@ -39,9 +48,10 @@ export const Body = () => {
         ></input>
         <button
           onClick={() => {
-            let searchedrestro = restrolist.filter((res) =>
-              // res.name.includes(searchvalue)
-              res.info.name && typeof res.info.name === 'string' && res.info.name.includes(searchvalue)
+            let searchedrestro = reslists.filter(
+              (res) =>
+                res.info.name &&
+                res.info.name.toLowerCase().includes(searchvalue.toLowerCase())
             );
             setrestrolist(searchedrestro);
           }}
